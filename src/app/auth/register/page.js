@@ -105,7 +105,7 @@ export default function RegisterPage() {
   return (
     <>
       <h1>Créer un compte</h1>
-      <p>Inscrivez-vous en tant qu'Admin</p>
+      <p>Inscrivez-vous en tant qu&apos;Admin</p>
       <form onSubmit={handleSubmit}>
         <Input id="nom" name="nom" type="text" placeholder="Nom" required />
         <Input id="prenom" name="prenom" type="text" placeholder="Prénom" required />
@@ -115,7 +115,7 @@ export default function RegisterPage() {
           <Checkbox id="terms" name="terms" type="checkbox" required />
           <Label htmlFor="terms">Accepter les termes et le politique</Label>
         </div>
-        <Button type="submit">S'inscrire</Button>
+        <Button type="submit">S&apos;inscrire</Button>
       </form>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {success && <p style={{ color: 'green' }}>{success}</p>}

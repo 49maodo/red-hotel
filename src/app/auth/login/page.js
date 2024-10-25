@@ -100,7 +100,7 @@ export default function LoginPage() {
   return (
     <>
       <h1>RED PRODUCT</h1>
-      <p>Connectez-vous en tant qu'Admin</p>
+      <p>Connectez-vous en tant qu&apos;Admin</p>
       <form onSubmit={handleSubmit}>
         <Input
           type="email"
@@ -128,7 +128,7 @@ export default function LoginPage() {
       </ForgotPassword>
       <Signup>
         <p>
-          Vous n'avez pas de compte? <Link href="/auth/register">S'inscrire</Link>
+          Vous n&apos;avez pas de compte? <Link href="/auth/register">S&apos;inscrire</Link>
         </p>
       </Signup>
     </>

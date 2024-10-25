@@ -133,7 +133,7 @@ const Modal = ({ show, onClose, refreshHotels }) => {
                 <form onSubmit={handleSubmit}>
                     <FieldRow>
                         <div>
-                            <Label>Nom de l'hôtel</Label>
+                            <Label>Nom de l&apos;hôtel</Label>
                             <Input type="text" name="nom" value={formData.nom} onChange={handleChange} required />
                         </div>
                         <div>
