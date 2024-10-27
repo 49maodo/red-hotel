@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { GrLinkPrevious } from "react-icons/gr";
 import { FaPlus } from "react-icons/fa6";
-
+import toast from "react-hot-toast"
 const ModalOverlay = styled.div`
   position: fixed;
   top: 0;
@@ -107,6 +107,7 @@ const Modal = ({ show, onClose, refreshHotels }) => {
 
             if (response.ok) {
                 console.log('Hôtel créé avec succès:', responseData);
+                toast.success('Hôtel créé avec succès')
                 refreshHotels(); // Appelle la fonction pour rafraîchir la liste des hôtels
                 onClose();
             } else {
@@ -118,7 +119,12 @@ const Modal = ({ show, onClose, refreshHotels }) => {
             console.error('Erreur réseau:', error);
         }
     };
-
+    useEffect(() => {
+        if (errorMessage) {
+            toast.error(errorMessage);
+            setError("");
+        }
+    }, [errorMessage]);
     if (!show) return null;
 
     return (
@@ -168,7 +174,7 @@ const Modal = ({ show, onClose, refreshHotels }) => {
                     <Label>Ajouter une photo</Label>
                     <Input className="file" type="file" accept="image/*" onChange={handleFileChange} required />
                     <Button type="submit">Enregistrer</Button>
-                    {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+                    {/* {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>} */}
                 </form>
             </ModalContent>
         </ModalOverlay>

@@ -1,9 +1,9 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
 import Link from "next/link";
-
+import toast from "react-hot-toast"
 const Input = styled.input`
   width: 100%;
   padding: 10px;
@@ -69,6 +69,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [motDePasse, setMotDePasse] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const router = useRouter();
 
   const handleSubmit = async (e) => {
@@ -88,6 +89,8 @@ export default function LoginPage() {
 
       if (response.ok) {
         // Connexion réussie, redirection vers une autre page
+        setSuccess(data.message)
+        setError("");
         router.push("/");
       } else {
         setError(data.message || "Une erreur s'est produite");
@@ -97,6 +100,16 @@ export default function LoginPage() {
       setError("Erreur serveur. Veuillez réessayer plus tard.");
     }
   };
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      setError('');
+    }
+    if (success) {
+      toast.success(success);
+      setSuccess('')
+    }
+  }, [error, success]);
   return (
     <>
       <h1>RED PRODUCT</h1>
@@ -120,7 +133,7 @@ export default function LoginPage() {
           <Checkbox id="remember-me" type="checkbox" />
           <Label htmlFor="remember-me">Gardez-moi connecté</Label>
         </div>
-        {error && <p style={{ color: "red" }}>{error}</p>}
+
         <Button type="submit">Se connecter</Button>
       </form>
       <ForgotPassword>

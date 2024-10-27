@@ -1,10 +1,10 @@
-"use client"; 
+"use client";
 
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import LayoutHome from '../layoutHome';
 import HotelModal from '@/components/HotelModal';
-
+import toast from "react-hot-toast"
 // Styles pour les composants
 const Welcome = styled.div`
   margin: 0px 20px;
@@ -63,7 +63,8 @@ const HotelPrice = styled.p`
 `;
 
 export default function Hotel() {
-    const [hotels, setHotels] = useState([]);
+  const [hotels, setHotels] = useState([]);
+  const [error, setError] = useState("");
   const fetchHotels = async () => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END}/hotel`, {
@@ -71,7 +72,8 @@ export default function Hotel() {
       });
 
       if (!response.ok) {
-        throw new Error('Erreur lors de la récupération des hôtels');
+        // throw new Error('Erreur lors de la récupération des hôtels');
+        setError('Erreur lors de la récupération des hôtels')
       }
 
       const data = await response.json();
@@ -81,55 +83,41 @@ export default function Hotel() {
         setHotels(data);
       } else {
         console.error('Données des hôtels non valides', data);
+        setError('Données des hôtels non valides')
       }
     } catch (error) {
       console.error('Erreur:', error);
+      setError('Erreur serveur. Veuillez réessayer plus tard.')
     }
   };
-    useEffect(() => {
-        // const fetchHotels = async () => {
-        //     try {
-        //       const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END}/hotel`, {
-        //             credentials: 'include',
-        //         });
+  useEffect(() => {
+    fetchHotels();
+  }, []);
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      setError("");
+    }
+  }, [error]);
 
-        //         if (!response.ok) {
-        //             throw new Error('Erreur lors de la récupération des hôtels');
-        //         }
-
-        //         const data = await response.json();
-        //         console.log('Données des hôtels:', data);
-
-        //         if (Array.isArray(data) && data.length > 0) {
-        //             setHotels(data); 
-        //         } else {
-        //             console.error('Données des hôtels non valides', data);
-        //         }
-        //     } catch (error) {
-        //         console.error('Erreur:', error);
-        //     }
-        // };
-        fetchHotels();
-    }, []);
-
-    return (
-        <LayoutHome>
-            <Welcome>
-                <h2>Hôtels <span>({hotels.length})</span></h2>
-            <HotelModal refreshHotels={fetchHotels} />
-            </Welcome>
-            <HotelGrid>
-                {hotels.map((hotel) => (
-                    <HotelCard key={hotel._id}>
-                    <HotelImage src={`${process.env.NEXT_PUBLIC_BACK_END}${hotel.image}`} alt={hotel.nom} />
-                        <HotelInfo>
-                            <HotelName>{hotel.nom}</HotelName>
-                            <HotelAddress>{hotel.adresse}</HotelAddress>
-                            <HotelPrice>{hotel.prix} {hotel.devise} par nuit</HotelPrice>
-                        </HotelInfo>
-                    </HotelCard>
-                ))}
-            </HotelGrid>
-        </LayoutHome>
-    );
+  return (
+    <LayoutHome>
+      <Welcome>
+        <h2>Hôtels <span>({hotels.length})</span></h2>
+        <HotelModal refreshHotels={fetchHotels} />
+      </Welcome>
+      <HotelGrid>
+        {hotels.map((hotel) => (
+          <HotelCard key={hotel._id}>
+            <HotelImage src={`${process.env.NEXT_PUBLIC_BACK_END}${hotel.image}`} alt={hotel.nom} />
+            <HotelInfo>
+              <HotelName>{hotel.nom}</HotelName>
+              <HotelAddress>{hotel.adresse}</HotelAddress>
+              <HotelPrice>{hotel.prix} {hotel.devise} par nuit</HotelPrice>
+            </HotelInfo>
+          </HotelCard>
+        ))}
+      </HotelGrid>
+    </LayoutHome>
+  );
 }

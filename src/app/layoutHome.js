@@ -5,7 +5,7 @@ import { Sidebar } from '@/components/Sidebar';
 import { Header } from '@/components/Header';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-
+import toast from "react-hot-toast"
 const MainContent = styled.div`
   margin-left: 250px;
   padding: 0px 20px;
@@ -20,6 +20,7 @@ const Welcome = styled.div`
 export default function LayoutHome({ children }) {
 
   const [user, setUser] = useState(null);
+  const [error, setError] = useState("");
   const router = useRouter();
 
   useEffect(() => {
@@ -55,11 +56,19 @@ export default function LayoutHome({ children }) {
         router.push('/auth/login');
       } else {
         console.error("Erreur lors de la déconnexion");
+        setError("Erreur lors de la déconnexion")
       }
     } catch (error) {
       console.error("Erreur réseau :", error);
+      setError("Erreur réseau :")
     }
   };
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      setError("");
+    }
+  }, [error]);
 
   if (!user) {
     return null;

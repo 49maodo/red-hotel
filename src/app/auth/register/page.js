@@ -1,10 +1,10 @@
 "use client"; // Ceci doit être la première ligne du fichier
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
 import Link from "next/link";
-
+import toast from "react-hot-toast"
 const Input = styled.input`
   width: 100%;
   padding: 10px;
@@ -56,7 +56,7 @@ export default function RegisterPage() {
   const router = useRouter();
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -101,7 +101,16 @@ export default function RegisterPage() {
       setError("Erreur de réseau. Veuillez réessayer.");
     }
   };
-
+  useEffect(() => {
+    if (error) {
+      toast.error(error); 
+      setError("");
+    }
+    if (success) {
+      toast.success(success);
+      setSuccess('')
+    }
+  }, [error, success]);
   return (
     <>
       <h1>Créer un compte</h1>
@@ -117,8 +126,8 @@ export default function RegisterPage() {
         </div>
         <Button type="submit">S&apos;inscrire</Button>
       </form>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {success && <p style={{ color: 'green' }}>{success}</p>}
+      {/* {error && <p style={{ color: 'red' }}>{error}</p>}
+      {success && <p style={{ color: 'green' }}>{success}</p>} */}
       <LoginLink>
         <p>
           Vous avez déjà un compte? <Link href="/auth/login">Se connecter</Link>
