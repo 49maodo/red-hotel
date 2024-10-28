@@ -111,7 +111,7 @@ const Modal = ({ show, onClose, refreshHotels }) => {
                 refreshHotels(); // Appelle la fonction pour rafraîchir la liste des hôtels
                 onClose();
             } else {
-                setErrorMessage(responseData.message || 'Une erreur est survenue.');
+                setErrorMessage(responseData.message);
                 console.error('Erreur lors de la création de l\'hôtel:', responseData);
             }
         } catch (error) {
@@ -122,7 +122,7 @@ const Modal = ({ show, onClose, refreshHotels }) => {
     useEffect(() => {
         if (errorMessage) {
             toast.error(errorMessage);
-            setError("");
+            setErrorMessage("");
         }
     }, [errorMessage]);
     if (!show) return null;

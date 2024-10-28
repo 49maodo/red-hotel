@@ -109,7 +109,7 @@ export default function Hotel() {
       <HotelGrid>
         {hotels.map((hotel) => (
           <HotelCard key={hotel._id}>
-            <HotelImage src={`${process.env.NEXT_PUBLIC_BACK_END}${hotel.image}`} alt={hotel.nom} />
+            <HotelImage src={`${hotel.image}`} alt={hotel.nom} />
             <HotelInfo>
               <HotelName>{hotel.nom}</HotelName>
               <HotelAddress>{hotel.adresse}</HotelAddress>
