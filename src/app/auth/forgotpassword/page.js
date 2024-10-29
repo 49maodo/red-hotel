@@ -1,8 +1,8 @@
 "use client";
+import { useState } from "react";
 import styled from "styled-components";
 import Link from "next/link";
-// import AuthLayout from "@/app/layoutAuth";
-
+import toast from "react-hot-toast"
 
 const Input = styled.input`
   width: 100%;
@@ -12,7 +12,6 @@ const Input = styled.input`
   border-radius: 4px;
   box-sizing: border-box;
 `;
-
 
 const Button = styled.button`
   width: 100%;
@@ -58,17 +57,49 @@ const Signup = styled.div`
 `;
 
 export default function LoginPage() {
+  const [email, setEmail] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END}/api/password-reset`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        toast.success("Instructions pour réinitialiser votre mot de passe envoyées par e-mail !");
+      } else {
+        toast.error(data.message || "Une erreur s'est produite.");
+      }
+    } catch (error) {
+      toast.error("Erreur lors de la demande de réinitialisation.");
+    }
+  };
+
   return (
     <>
       <h1>RED PRODUCT</h1>
-      <p>Entrez votre adresse mail ci-dessous et nous vous envoyons des instructions sur la façons de modifier votre mot de passe</p>
-      <form>
-        <Input type="email" placeholder="E-mail" required />
+      <p>Entrez votre adresse mail ci-dessous et nous vous envoyons des instructions sur la façon de modifier votre mot de passe</p>
+      <form onSubmit={handleSubmit}>
+        <Input
+          type="email"
+          placeholder="E-mail"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
         <Button type="submit">Se connecter</Button>
       </form>
       <Signup>
         <p>
-          Revenir à la page <Link href="/auth/login">connection</Link>
+          Revenir à la page <Link href="/auth/login">connexion</Link>
         </p>
       </Signup>
     </>

@@ -5,7 +5,8 @@ import { FaPlus } from "react-icons/fa6";
 import toast from "react-hot-toast"
 const ModalOverlay = styled.div`
   position: fixed;
-  top: 0;
+  top: 0; 
+  z-index: 100;
   left: 0;
   right: 0;
   bottom: 0;

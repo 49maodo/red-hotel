@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <Toaster position="top-right" reverseOrder={true} />
+        <Toaster position="top-right" reverseOrder={true} toastOptions={{ duration: 5000, }} />
         {children}
       </body>
     </html>
