@@ -60,11 +60,11 @@ const ProfileImage = styled.img`
 export const Header = ({ onLogout }) => (
   <HeaderWrapper>
     <Title>Dashboard</Title>
+    <Notifications>
     <SearchWrapper>
       <SearchInput placeholder="Recherche" />
       <FaSearch style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', color: '#aaa' }} />
     </SearchWrapper>
-    <Notifications>
       <NotificationIcon>
         <FaBell />
         <span className="badge">3</span>

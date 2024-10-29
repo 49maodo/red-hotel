@@ -95,7 +95,7 @@ export default function LoginPage() {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-        <Button type="submit">Se connecter</Button>
+        <Button type="submit">Envoyer</Button>
       </form>
       <Signup>
         <p>

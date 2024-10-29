@@ -64,7 +64,7 @@ const Status = styled.div`
 
 export const Sidebar = ({ user }) => {
   return (
-    <SidebarWrapper>
+    <SidebarWrapper className='sidebar'>
       <div>
         <Logo>RED PRODUCT</Logo>
         <Menu>
