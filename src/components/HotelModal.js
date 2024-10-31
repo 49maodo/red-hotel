@@ -32,6 +32,13 @@ const Button = styled.button`
   border-radius: 4px;
   cursor: pointer;
 `;
+const Button1 = styled.button`
+  padding: 10px 20px;
+  background-color: transparant;
+  border: 2px solid black;
+  border-radius: 4px;
+  cursor: pointer;
+`;
 
 const Input = styled.input`
   width: 90%;
@@ -187,9 +194,9 @@ const HotelModal = ({ refreshHotels }) => {
 
     return (
         <div>
-            <Button onClick={() => setShowModal(true)}>
+            <Button1 onClick={() => setShowModal(true)}>
                 <FaPlus /> Créer un nouvel hôtel
-            </Button>
+            </Button1>
             <Modal show={showModal} onClose={() => setShowModal(false)} refreshHotels={refreshHotels} />
         </div>
     );

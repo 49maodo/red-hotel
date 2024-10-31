@@ -8,21 +8,23 @@ import { useRouter } from 'next/navigation';
 import toast from "react-hot-toast"
 const MainContent = styled.div`
   margin-left: 250px;
-  padding: 0px 20px;
-  background: #F0F0F0;
+  background: #F8F8F8;
   min-height: 100vh;
+  @media screen and (max-width: 768px){
+    margin-left: 0px;
+  }
 `;
 
-const Welcome = styled.div`
-  margin: 20px;
-`;
 
 export default function LayoutHome({ children }) {
 
   const [user, setUser] = useState(null);
   const [error, setError] = useState("");
   const router = useRouter();
-
+  const [sidebarVisible, setSidebarVisible] = useState(false);
+  const toggleSidebar = () => {
+    setSidebarVisible(!sidebarVisible);
+  };
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -76,9 +78,9 @@ export default function LayoutHome({ children }) {
   console.log("user", user)
   return (
     <>
-      <Sidebar user={user} />
-      <MainContent>
-        <Header onLogout={handleLogout} />
+      <Sidebar user={user} isVisible={sidebarVisible} />
+      <MainContent >
+        <Header onLogout={handleLogout} toggleSidebar={toggleSidebar}/>
         {children}
       </MainContent>
     </>

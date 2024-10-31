@@ -1,23 +1,41 @@
 // components/Header.js
 import styled from 'styled-components';
 import { FaSearch, FaBell, FaSignOutAlt } from 'react-icons/fa';
-
+import { CiMenuBurger } from "react-icons/ci";
 const HeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: white;
   padding: 0px 30px;
-  border-radius: 2rem;
+  margin: 0px;
+  @media screen and (max-width: 768px){
+    position: sticky;
+    top: 0px;
+    z-index: 9;
+    padding: 10px 30px;
+  }
 `;
 
 const Title = styled.h1`
   font-size: 24px;
   font-weight: 500;
+  @media screen and (max-width: 768px){
+    display: none;
+  }
+`;
+const Menu = styled.button`
+  
+  @media screen and (min-width: 768px){
+    display: none;
+  }
 `;
 
 const SearchWrapper = styled.div`
   position: relative;
+  @media screen and (max-width: 768px){
+    display: none;
+  }
 `;
 
 const SearchInput = styled.input`
@@ -57,17 +75,20 @@ const ProfileImage = styled.img`
   margin-left: 10px;
 `;
 
-export const Header = ({ onLogout }) => (
+export const Header = ({ toggleSidebar, onLogout }) => (
   <HeaderWrapper>
+    <Menu onClick={toggleSidebar}>
+      <CiMenuBurger />
+    </Menu>
     <Title>Dashboard</Title>
     <Notifications>
-    <SearchWrapper>
-      <SearchInput placeholder="Recherche" />
-      <FaSearch style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', color: '#aaa' }} />
-    </SearchWrapper>
+      <SearchWrapper>
+        <SearchInput placeholder="Recherche" />
+        <FaSearch style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', color: '#aaa' }} />
+      </SearchWrapper>
       <NotificationIcon>
-        <FaBell />
         <span className="badge">3</span>
+        <FaBell />
       </NotificationIcon>
       <ProfileImage src="/image/1.jpg" alt="Profile" />
       <FaSignOutAlt onClick={onLogout} style={{ cursor: 'pointer' }} />

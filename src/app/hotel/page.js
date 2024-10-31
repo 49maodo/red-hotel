@@ -7,9 +7,14 @@ import HotelModal from '@/components/HotelModal';
 import toast from "react-hot-toast"
 // Styles pour les composants
 const Welcome = styled.div`
-  margin: 0px 20px;
+  padding: 0px 20px;
+  z-index: 20;
   display: flex;
+  background-color: white;
   align-items: center; 
+  border-top: 1px solid rgb(179 173 173 / 50%);
+  border-bottom: 1px solid rgb(179 173 173 / 50%);
+  margin-bottom: 15px;
   justify-content: space-between;
   & span {
     opacity: 0.5;
@@ -18,9 +23,9 @@ const Welcome = styled.div`
 
 const HotelGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-  padding: 0px;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+  padding: 0px 20px;
 `;
 
 const HotelCard = styled.div`
@@ -36,7 +41,7 @@ const HotelCard = styled.div`
 
 const HotelImage = styled.img`
   width: 100%;
-  height: 250px;
+  // height: 250px;
   object-fit: cover;
   display: block;  
   margin: 0 auto;

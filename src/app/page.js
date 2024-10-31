@@ -7,7 +7,9 @@ import { FaEnvelope, FaComments, FaUsers, FaBuilding } from 'react-icons/fa';
 const CardsWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
+  margin-top: 15px;
   gap: 20px;
+  padding: 0px 20px;
 `;
 
 const Card = styled.div`
@@ -39,10 +41,82 @@ const Card = styled.div`
   .label {
     color: #888;
   }
+  .formulaire{
+  width: 65px;
+  height:65px;
+  color: white;
+  border-radius: 100%;
+  display: flex;
+  align-items:center;
+  justify-content: center;
+  background-color: #a88add;
+  }
+  .message{
+  width: 65px;
+  height:65px;
+  color: white;
+  border-radius: 100%;
+  display: flex;
+  align-items:center;
+  justify-content: center;
+  background-color: #0cc2aa;
+  }
+  .user{
+  width: 65px;
+  height:65px;
+  color: white;
+  border-radius: 100%;
+  display: flex;
+  align-items:center;
+  justify-content: center;
+  background-color: #fcc100;
+  }
+  .email{
+  width: 65px;
+  height:65px;
+  color: white;
+  border-radius: 100%;
+  display: flex;
+  align-items:center;
+  justify-content: center;
+  background-color: #f90000;
+  }
+  .hotel{
+  width: 65px;
+  height:65px;
+  color: white;
+  border-radius: 100%;
+  display: flex;
+  align-items:center;
+  justify-content: center;
+  background-color: #9c27b0;
+  }
+  .entite{
+  width: 65px;
+  height:65px;
+  color: white;
+  border-radius: 100%;
+  display: flex;
+  align-items:center;
+  justify-content: center;
+  background-color: #1565c0;
+  }
 `;
 
 const Welcome = styled.div`
-  margin: 0px 0px;
+  background-color: white;
+  padding: 5px 20px;
+  border-top: 1px solid rgb(179 173 173 / 50%);
+  border-bottom: 1px solid rgb(179 173 173 / 50%);
+  margin-buttom: 15px;
+  & h2{
+  margin: 0px;
+  padding:0px;
+  }
+  & p{
+  margin: 0px;
+  padding:0px;
+  }
 `;
 
 export default function Dashboard() {
@@ -54,7 +128,9 @@ export default function Dashboard() {
       </Welcome>
       <CardsWrapper>
         <Card>
-          <FaEnvelope />
+          <div className='formulaire'>
+            <FaEnvelope/>
+          </div>
           <div >
             <div className="info">
               <div className="number">125</div>
@@ -64,7 +140,9 @@ export default function Dashboard() {
           </div>
         </Card>
         <Card>
-          <FaEnvelope />
+          <div className='message'>
+            <FaEnvelope/>
+          </div>
           <div >
             <div className="info">
               <div className="number">25</div>
@@ -74,7 +152,9 @@ export default function Dashboard() {
           </div>
         </Card>
         <Card>
+          <div className='user'>
           <FaComments />
+          </div>
           <div >
             <div className="info">
               <div className="number">40</div>
@@ -84,7 +164,9 @@ export default function Dashboard() {
           </div>
         </Card>
         <Card>
-          <FaUsers />
+          <div className='email'>
+            <FaUsers />
+          </div>
           <div >
             <div className="info">
               <div className="number">600</div>
@@ -94,7 +176,9 @@ export default function Dashboard() {
           </div>
         </Card>
         <Card>
+          <div className='hotel'>
           <FaBuilding />
+          </div>
           <div >
             <div className="info">
               <div className="number">40</div>
@@ -104,7 +188,9 @@ export default function Dashboard() {
           </div>
         </Card>
         <Card>
-          <FaBuilding />
+          <div className='entite'>
+            <FaBuilding />
+          </div>
           <div >
             <div className="info">
               <div className="number">02</div>
