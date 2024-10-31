@@ -5,7 +5,9 @@ import styled from 'styled-components';
 import LayoutHome from '../layoutHome';
 import HotelModal from '@/components/HotelModal';
 import toast from "react-hot-toast"
-// Styles pour les composants
+import { MdDelete } from "react-icons/md";
+import { FaEdit } from "react-icons/fa";
+
 const Welcome = styled.div`
   padding: 0px 20px;
   z-index: 20;
@@ -23,9 +25,15 @@ const Welcome = styled.div`
 
 const HotelGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 10px;
   padding: 0px 20px;
+  @media screen and (max-width: 800px){
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  }
+  @media screen and (max-width: 465px){
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
 `;
 
 const HotelCard = styled.div`
@@ -49,22 +57,58 @@ const HotelImage = styled.img`
 
 const HotelInfo = styled.div`
   padding: 0px 15px;
+  magin:0px;
 `;
 
 const HotelName = styled.h3`
-  margin: 0;
-  font-size: 1.25rem;
+  margin: 0px;
+  padding:5px 0px;
+  font-size: 26px;
 `;
 
 const HotelAddress = styled.p`
-  font-size: 0.9rem;
-  color: #555;
+  font-size: 14px;
+  margin: 0px;
+  padding:5px 0px;
+  color: #8D4B38;
+;
 `;
 
 const HotelPrice = styled.p`
-  font-size: 1rem;
+  font-size: 15px;
+  margin: 0px;
+  padding:5px 0px;
   font-weight: bold;
   color: #000;
+`;
+const HotelFooter = styled.div`
+  font-size: 1rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  height: 30px;
+  justify-content: space-around;
+  color: white;
+`;
+const HotelEdit = styled.button`
+  width: 40px;
+  height: 30px;
+  background-color: #4361ee;
+  display:flex;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 1rem;
+  justify-content: center;
+`;
+const HotelDelete = styled.button`
+  width: 40px;
+  height: 30px;
+  background-color: #d80032;
+  display:flex;
+  cursor: pointer;
+  border-radius: 1rem;
+  align-items: center;
+  justify-content: center;
 `;
 
 export default function Hotel() {
@@ -105,21 +149,54 @@ export default function Hotel() {
     }
   }, [error]);
 
+  // Fonction de suppression
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm("Êtes-vous sûr de vouloir supprimer cet hôtel ?");
+    if (!confirmDelete) return;
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END}/hotel/delete/${id}`, {
+        method: 'DELETE',
+        credentials: 'include',
+      });
+
+      if (!response.ok) {
+        throw new Error('Erreur lors de la suppression de l\'hôtel');
+      }
+
+      // Réactualiser la liste des hôtels
+      fetchHotels();
+      toast.success('Hôtel supprimé avec succès');
+    } catch (error) {
+      console.error('Erreur:', error);
+      toast.error('Erreur lors de la suppression de l\'hôtel');
+    }
+  };
+
+
   return (
     <LayoutHome>
       <Welcome>
         <h2>Hôtels <span>({hotels.length})</span></h2>
-        <HotelModal refreshHotels={fetchHotels} />
+         <HotelModal onClose={() => setShowModal(false)} refreshHotels={fetchHotels} />
       </Welcome>
       <HotelGrid>
         {hotels.map((hotel) => (
           <HotelCard key={hotel._id}>
             <HotelImage src={`${hotel.image}`} alt={hotel.nom} />
             <HotelInfo>
-              <HotelName>{hotel.nom}</HotelName>
               <HotelAddress>{hotel.adresse}</HotelAddress>
+              <HotelName>{hotel.nom}</HotelName>
               <HotelPrice>{hotel.prix} {hotel.devise} par nuit</HotelPrice>
             </HotelInfo>
+            <HotelFooter>
+              <HotelEdit>
+                <FaEdit/>
+              </HotelEdit>
+              <HotelDelete onClick={() => handleDelete(hotel._id)}>
+                <MdDelete />
+              </HotelDelete>
+            </HotelFooter>
           </HotelCard>
         ))}
       </HotelGrid>
