@@ -84,7 +84,7 @@ export default function Hotel() {
       const data = await response.json();
       console.log('Données des hôtels:', data);
 
-      if (Array.isArray(data) && data.length > 0) {
+      if (Array.isArray(data) && data.length >= 0) {
         setHotels(data);
       } else {
         console.error('Données des hôtels non valides', data);
