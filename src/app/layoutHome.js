@@ -77,7 +77,7 @@ export default function LayoutHome({ children }) {
   }
   return (
     <>
-      <Sidebar user={user} isVisible={sidebarVisible} />
+      <Sidebar user={user} isvisible={sidebarVisible} />
       <MainContent >
         <Header onLogout={handleLogout} toggleSidebar={toggleSidebar}/>
         {children}

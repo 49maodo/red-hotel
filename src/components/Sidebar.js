@@ -17,8 +17,8 @@ const SidebarWrapper = styled.div`
   justify-content: space-between;
   transition: transform 0.3s ease;
   @media screen and (max-width: 768px){
-    transform: ${({ isVisible }) => (isVisible ? 'translateX(0)' : 'translateX(-100%)')};
-    display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
+    transform: ${({ isvisible }) => (isvisible ? 'translateX(0)' : 'translateX(-100%)')};
+    display: ${({ isvisible }) => (isvisible ? 'flex' : 'none')};
   }
 `;
 
@@ -82,10 +82,10 @@ const Status = styled.div`
   font-size: 12px;
 `;
 
-export const Sidebar = ({ user, isVisible }) => {
+export const Sidebar = ({ user, isvisible }) => {
   const pathname = usePathname()
   return (
-    <SidebarWrapper isVisible={isVisible}>
+    <SidebarWrapper isvisible={isvisible}>
       <div>
         <Logo>RED PRODUCT</Logo>
         <Menu>
