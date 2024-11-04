@@ -1,5 +1,5 @@
 "use client"; // Ceci doit être la première ligne du fichier
-
+import { Roller } from 'react-css-spinners'
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
@@ -56,10 +56,10 @@ export default function RegisterPage() {
   const router = useRouter();
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-
+  const [isLoading, setIsLoading] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     const nom = e.target.nom.value;
     const prenom = e.target.prenom.value;
     const email = e.target.email.value;
@@ -86,19 +86,17 @@ export default function RegisterPage() {
       });
 
       const data = await response.json();
-      console.log(data);
-
       if (response.ok) {
         setSuccess(data.message);
         setError("");
-        // Clear any existing errors
-        console.log("Redirection en cours...");
         router.push("/auth/login");
       } else {
         setError(data.message || "Erreur lors de l'inscription");
       }
     } catch (error) {
       setError("Erreur de réseau. Veuillez réessayer.");
+    }finally {
+        setIsLoading(false);
     }
   };
   useEffect(() => {
@@ -124,10 +122,10 @@ export default function RegisterPage() {
           <Checkbox id="terms" name="terms" type="checkbox" required />
           <Label htmlFor="terms">Accepter les termes et le politique</Label>
         </div>
-        <Button type="submit">S&apos;inscrire</Button>
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? <span>Loading <Roller size={15}/> </span> : 'S\'inscrire' }
+        </Button>
       </form>
-      {/* {error && <p style={{ color: 'red' }}>{error}</p>}
-      {success && <p style={{ color: 'green' }}>{success}</p>} */}
       <LoginLink>
         <p>
           Vous avez déjà un compte? <Link href="/auth/login">Se connecter</Link>

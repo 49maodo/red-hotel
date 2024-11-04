@@ -1,6 +1,7 @@
 // components/Header.js
 import styled from 'styled-components';
-import { FaSearch, FaBell, FaSignOutAlt } from 'react-icons/fa';
+import { FaSearch, FaBell } from 'react-icons/fa';
+import { LuLogOut } from "react-icons/lu";
 import { CiMenuBurger } from "react-icons/ci";
 const HeaderWrapper = styled.div`
   display: flex;
@@ -91,7 +92,7 @@ export const Header = ({ toggleSidebar, onLogout }) => (
         <FaBell />
       </NotificationIcon>
       <ProfileImage src="/image/1.jpg" alt="Profile" />
-      <FaSignOutAlt onClick={onLogout} style={{ cursor: 'pointer' }} />
+      <LuLogOut onClick={onLogout} style={{ cursor: 'pointer' }} />
     </Notifications>
   </HeaderWrapper>
 );

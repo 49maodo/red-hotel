@@ -3,11 +3,11 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import LayoutHome from '../layoutHome';
-import HotelModal from '@/components/HotelModal';
+import Modal from '@/components/Modal';
 import toast from "react-hot-toast"
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
-
+import { FaPlus } from "react-icons/fa6";
 const Welcome = styled.div`
   padding: 0px 20px;
   z-index: 20;
@@ -110,10 +110,19 @@ const HotelDelete = styled.button`
   align-items: center;
   justify-content: center;
 `;
+const Button1 = styled.button`
+  padding: 10px 20px;
+  background-color: transparant;
+  border: 2px solid black;
+  border-radius: 4px;
+  cursor: pointer;
+`;
 
 export default function Hotel() {
   const [hotels, setHotels] = useState([]);
   const [error, setError] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [hotelToEdit, setHotelToEdit] = useState(null);
   const fetchHotels = async () => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END}/hotel`, {
@@ -121,21 +130,17 @@ export default function Hotel() {
       });
 
       if (!response.ok) {
-        // throw new Error('Erreur lors de la récupération des hôtels');
         setError('Erreur lors de la récupération des hôtels')
       }
 
       const data = await response.json();
-      console.log('Données des hôtels:', data);
 
       if (Array.isArray(data) && data.length >= 0) {
         setHotels(data);
       } else {
-        console.error('Données des hôtels non valides', data);
         setError('Données des hôtels non valides')
       }
     } catch (error) {
-      console.error('Erreur:', error);
       setError('Erreur serveur. Veuillez réessayer plus tard.')
     }
   };
@@ -148,8 +153,18 @@ export default function Hotel() {
       setError("");
     }
   }, [error]);
+  const handleEdit = (hotel) => {
+    setHotelToEdit(hotel);
+    setShowModal(true);
+  };
+  const resetHotelToEdit = () => {
+    setHotelToEdit(null);
+  };
+  const handleClose = () => {
+    resetHotelToEdit();
+    setShowModal(false)
+  };
 
-  // Fonction de suppression
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm("Êtes-vous sûr de vouloir supprimer cet hôtel ?");
     if (!confirmDelete) return;
@@ -164,21 +179,27 @@ export default function Hotel() {
         throw new Error('Erreur lors de la suppression de l\'hôtel');
       }
 
-      // Réactualiser la liste des hôtels
       fetchHotels();
       toast.success('Hôtel supprimé avec succès');
     } catch (error) {
-      console.error('Erreur:', error);
-      toast.error('Erreur lors de la suppression de l\'hôtel');
+      toast.error(`Erreur lors de la suppression de l\'hôtel ${error}`);
     }
   };
 
-
   return (
+
     <LayoutHome>
       <Welcome>
         <h2>Hôtels <span>({hotels.length})</span></h2>
-         <HotelModal onClose={() => setShowModal(false)} refreshHotels={fetchHotels} />
+        <Button1 onClick={() => setShowModal(true)}>
+          <FaPlus /> Créer un nouvel hôtel
+        </Button1>
+        <Modal
+          show={showModal}
+          onClose={() => handleClose()}
+          refreshHotels={fetchHotels}
+          hotelToEdit={hotelToEdit}
+        />
       </Welcome>
       <HotelGrid>
         {hotels.map((hotel) => (
@@ -190,8 +211,8 @@ export default function Hotel() {
               <HotelPrice>{hotel.prix} {hotel.devise} par nuit</HotelPrice>
             </HotelInfo>
             <HotelFooter>
-              <HotelEdit>
-                <FaEdit/>
+              <HotelEdit onClick={() => handleEdit(hotel)}>
+                <FaEdit />
               </HotelEdit>
               <HotelDelete onClick={() => handleDelete(hotel._id)}>
                 <MdDelete />

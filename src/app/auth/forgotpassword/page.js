@@ -3,7 +3,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import Link from "next/link";
 import toast from "react-hot-toast"
-
+import { Roller } from 'react-css-spinners'
 const Input = styled.input`
   width: 100%;
   padding: 10px;
@@ -58,10 +58,10 @@ const Signup = styled.div`
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
-
+  const [isLoading, setIsLoading] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END}/api/password-reset`, {
         method: "POST",
@@ -80,6 +80,8 @@ export default function LoginPage() {
       }
     } catch (error) {
       toast.error("Erreur lors de la demande de réinitialisation.");
+    }finally {
+      setIsLoading(false);
     }
   };
 
@@ -95,7 +97,9 @@ export default function LoginPage() {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-        <Button type="submit">Envoyer</Button>
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? <span>Loading <Roller size={15}/> </span> : 'Envoyer' }
+        </Button>
       </form>
       <Signup>
         <p>

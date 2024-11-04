@@ -1,10 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation"; // Assurez-vous d'importer depuis next/navigation
+import { useRouter } from "next/navigation";
 import styled from "styled-components";
 import Link from "next/link";
 import toast from "react-hot-toast"
-
+import { Roller } from 'react-css-spinners'
 const Input = styled.input`
   width: 100%;
   padding: 10px;
@@ -44,11 +44,11 @@ const Signup = styled.div`
 `;
 
 export default function ResetPasswordPage() {
-  const router = useRouter(); // Assurez-vous d'importer depuis next/navigation
+  const router = useRouter();
   const [token, setToken] = useState(null);
   const [motDePasse, setMotDePasse] = useState("");
   const [confirmerMotDePasse, setConfirmerMotDePasse] = useState("");
-
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const tokenFromQuery = urlParams.get('token');
@@ -62,7 +62,7 @@ export default function ResetPasswordPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     if (motDePasse !== confirmerMotDePasse) {
       toast.error("Les mots de passe ne correspondent pas.");
       return;
@@ -74,20 +74,21 @@ export default function ResetPasswordPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ token, motDePasse }), // Utilise le token ici
+        body: JSON.stringify({ token, motDePasse }), 
       });
 
       const data = await response.json();
 
       if (response.ok) {
         toast.success("Mot de passe modifié avec succès !");
-        // Redirigez l'utilisateur vers la page de connexion ou une autre page si nécessaire
-        router.push("/auth/login"); // Rediriger vers la page de connexion
+        router.push("/auth/login");
       } else {
         toast.error(data.message || "Une erreur s'est produite.");
       }
     } catch (error) {
       toast.error("Erreur lors de la modification du mot de passe.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -110,7 +111,9 @@ export default function ResetPasswordPage() {
           onChange={(e) => setConfirmerMotDePasse(e.target.value)}
           required
         />
-        <Button type="submit">Modifier</Button>
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? <span>Loading <Roller size={15}/></span> : 'Modifier'}
+        </Button>
       </form>
       <Signup>
         <p>

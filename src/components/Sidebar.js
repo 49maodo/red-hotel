@@ -42,8 +42,7 @@ const MenuItem = styled.li`
   padding: 0px 0px;
   cursor: pointer;
   display: flex;
-  margin-top: 15px;
-  margin: 0px;
+  margin: 15px 0px;
   &:hover, &.active {
     background-color: #444;
   }

@@ -1,15 +1,17 @@
+
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { GrLinkPrevious } from "react-icons/gr";
-import { FaPlus } from "react-icons/fa6";
+import { Roller } from 'react-css-spinners'
 import toast from "react-hot-toast"
 const ModalOverlay = styled.div`
+  z-index: 100;
   position: fixed;
   top: 0; 
-  z-index: 100;
   left: 0;
   right: 0;
   bottom: 0;
+  border: 2px solid red;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
@@ -19,6 +21,7 @@ const ModalOverlay = styled.div`
 const ModalContent = styled.div`
   background-color: white;
   padding: 20px;
+  border: 2px solid blue;
   border-radius: 8px;
   width: 900px;
   max-width: 100%;
@@ -75,8 +78,8 @@ const FieldRow = styled.div`
   }
 `;
 
-
-const Modal = ({ show, onClose, refreshHotels }) => {
+const Modal = ({ show, onClose, refreshHotels, hotelToEdit }) => {
+    const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({
         nom: '',
         adresse: '',
@@ -86,6 +89,29 @@ const Modal = ({ show, onClose, refreshHotels }) => {
         devise: 'XOF',
         image: '',
     });
+    useEffect(() => {
+        if (hotelToEdit) {
+            setFormData({
+                nom: hotelToEdit.nom || '',
+                adresse: hotelToEdit.adresse || '',
+                email: hotelToEdit.email || '',
+                numTel: hotelToEdit.numTel || '',
+                prix: hotelToEdit.prix || '',
+                devise: hotelToEdit.devise || 'XOF',
+                image: '',
+            });
+        } else {
+            setFormData({
+                nom: '',
+                adresse: '',
+                email: '',
+                numTel: '',
+                prix: '',
+                devise: 'XOF',
+                image: '',
+            });
+        }
+    }, [hotelToEdit]);
     const [errorMessage, setErrorMessage] = useState(null);
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -98,15 +124,23 @@ const Modal = ({ show, onClose, refreshHotels }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        setIsLoading(true);
         const formDataToSubmit = new FormData();
         for (const key in formData) {
             formDataToSubmit.append(key, formData[key]);
         }
+        const method = hotelToEdit ? 'PUT' : 'POST';
 
+        const url = hotelToEdit
+            ? `${process.env.NEXT_PUBLIC_BACK_END}/hotel/edit/${hotelToEdit._id}`
+            : `${process.env.NEXT_PUBLIC_BACK_END}/hotel/create`;
+
+        console.log('method ', method)
+        console.log('url ', url)
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END}/hotel/create`, {
-                method: 'POST',
+
+            const response = await fetch(url, {
+                method: method,
                 credentials: 'include',
                 body: formDataToSubmit,
             });
@@ -115,18 +149,22 @@ const Modal = ({ show, onClose, refreshHotels }) => {
 
             if (response.ok) {
                 console.log('Hôtel créé avec succès:', responseData);
-                toast.success('Hôtel créé avec succès')
-                refreshHotels(); // Appelle la fonction pour rafraîchir la liste des hôtels
+                toast.success(hotelToEdit ? 'Hôtel modifié avec succès' : 'Hôtel créé avec succès');
+                refreshHotels();
                 onClose();
             } else {
                 setErrorMessage(responseData.message);
                 console.error('Erreur lors de la création de l\'hôtel:', responseData);
             }
         } catch (error) {
-            setErrorMessage('Erreur réseau, veuillez réessayer.');
+            setErrorMessage(responseData.message || 'Erreur réseau, veuillez réessayer.');
             console.error('Erreur réseau:', error);
+        } finally {
+            setIsLoading(false);
         }
     };
+
+
     useEffect(() => {
         if (errorMessage) {
             toast.error(errorMessage);
@@ -134,7 +172,6 @@ const Modal = ({ show, onClose, refreshHotels }) => {
         }
     }, [errorMessage]);
     if (!show) return null;
-
     return (
         <ModalOverlay onClick={onClose}>
             <ModalContent onClick={(e) => e.stopPropagation()}>
@@ -142,7 +179,7 @@ const Modal = ({ show, onClose, refreshHotels }) => {
                     <Button onClick={onClose} style={{ marginTop: '10px' }}>
                         <GrLinkPrevious />
                     </Button>
-                    Créer un nouvel hôtel
+                    {hotelToEdit ? 'Modifier l\'hôtel' : 'Créer un nouvel hôtel'}
                 </h2>
                 <form onSubmit={handleSubmit}>
                     <FieldRow>
@@ -180,26 +217,14 @@ const Modal = ({ show, onClose, refreshHotels }) => {
                         </div>
                     </FieldRow>
                     <Label>Ajouter une photo</Label>
-                    <Input className="file" type="file" accept="image/*" onChange={handleFileChange} required />
-                    <Button type="submit">Enregistrer</Button>
-                    {/* {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>} */}
+                    <Input className="file" type="file" accept="image/*" onChange={handleFileChange}
+                    />
+                    <Button type="submit" disabled={isLoading}>
+                        {isLoading ? <span>Loading <Roller size={15}/> </span> : (hotelToEdit ? 'Mettre à jour' : 'Enregistrer')}
+                    </Button> 
                 </form>
             </ModalContent>
         </ModalOverlay>
     );
 };
-
-const HotelModal = ({ refreshHotels }) => {
-    const [showModal, setShowModal] = useState(false);
-
-    return (
-        <div>
-            <Button1 onClick={() => setShowModal(true)}>
-                <FaPlus /> Créer un nouvel hôtel
-            </Button1>
-            <Modal show={showModal} onClose={() => setShowModal(false)} refreshHotels={refreshHotels} />
-        </div>
-    );
-};
-
-export default HotelModal;
+export default Modal

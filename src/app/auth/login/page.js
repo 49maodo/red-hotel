@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import styled from "styled-components";
 import Link from "next/link";
 import toast from "react-hot-toast"
+import { Roller } from 'react-css-spinners'
 const Input = styled.input`
   width: 100%;
   padding: 10px;
@@ -71,10 +72,10 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const router = useRouter();
-
+  const [isLoading, setIsLoading] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_END}/api/login`, {
         method: "POST",
@@ -88,7 +89,6 @@ export default function LoginPage() {
       const data = await response.json();
 
       if (response.ok) {
-        // Connexion réussie, redirection vers une autre page
         setSuccess(data.message)
         setError("");
         router.push("/");
@@ -98,6 +98,8 @@ export default function LoginPage() {
     } catch (error) {
       console.error("Erreur lors de la connexion:", error);
       setError("Erreur serveur. Veuillez réessayer plus tard.");
+    }finally {
+      setIsLoading(false);
     }
   };
   useEffect(() => {
@@ -133,8 +135,9 @@ export default function LoginPage() {
           <Checkbox id="remember-me" type="checkbox" />
           <Label htmlFor="remember-me">Gardez-moi connecté</Label>
         </div>
-
-        <Button type="submit">Se connecter</Button>
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? <span>Loading <Roller size={15}/> </span> : 'Se connecter' }
+        </Button>
       </form>
       <ForgotPassword>
         <Link href="/auth/forgotpassword">Mot de passe oublié?</Link>

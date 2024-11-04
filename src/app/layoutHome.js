@@ -75,7 +75,6 @@ export default function LayoutHome({ children }) {
   if (!user) {
     return null;
   }
-  console.log("user", user)
   return (
     <>
       <Sidebar user={user} isVisible={sidebarVisible} />
