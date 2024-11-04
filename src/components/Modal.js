@@ -11,7 +11,6 @@ const ModalOverlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  border: 2px solid red;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
@@ -21,7 +20,6 @@ const ModalOverlay = styled.div`
 const ModalContent = styled.div`
   background-color: white;
   padding: 20px;
-  border: 2px solid blue;
   border-radius: 8px;
   width: 900px;
   max-width: 100%;
@@ -32,13 +30,6 @@ const Button = styled.button`
   background-color: #333;
   color: white;
   border: none;
-  border-radius: 4px;
-  cursor: pointer;
-`;
-const Button1 = styled.button`
-  padding: 10px 20px;
-  background-color: transparant;
-  border: 2px solid black;
   border-radius: 4px;
   cursor: pointer;
 `;
