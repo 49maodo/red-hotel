@@ -1,70 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import styled from "styled-components";
 import Link from "next/link";
 import toast from "react-hot-toast"
 import { Roller } from 'react-css-spinners'
-const Input = styled.input`
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #CCCCCC;
-  border-radius: 4px;
-  box-sizing: border-box;
-`;
-
-const Checkbox = styled.input`
-  margin-right: 10px;
-`;
-
-const Label = styled.label`
-  font-size: 14px;
-  color: #666666;
-`;
-
-const Button = styled.button`
-  width: 100%;
-  padding: 10px;
-  background-color: #4A4A4A;
-  color: #FFFFFF;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #3A3A3A;
-  }
-`;
-
-const ForgotPassword = styled.div`
-  margin-top: 20px;
-  font-size: 14px;
-
-  a {
-    color: #FFD700;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-`;
-
-const Signup = styled.div`
-  margin-top: 20px;
-  font-size: 14px;
-
-  a {
-    color: #FFD700;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-`;
+import { AuthContainer, AuthFooter, Input, Checkbox, Label, Button } from "@/styles/auth.style";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -114,7 +54,7 @@ export default function LoginPage() {
   }, [error, success]);
   return (
     <>
-      <h1>RED PRODUCT</h1>
+      <AuthContainer>
       <p>Connectez-vous en tant qu&apos;Admin</p>
       <form onSubmit={handleSubmit}>
         <Input
@@ -139,14 +79,13 @@ export default function LoginPage() {
           {isLoading ? <span>Loading <Roller size={15}/> </span> : 'Se connecter' }
         </Button>
       </form>
-      <ForgotPassword>
+      </AuthContainer>
+      <AuthFooter>
         <Link href="/auth/forgotpassword">Mot de passe oublié?</Link>
-      </ForgotPassword>
-      <Signup>
         <p>
           Vous n&apos;avez pas de compte? <Link href="/auth/register">S&apos;inscrire</Link>
         </p>
-      </Signup>
+      </AuthFooter>
     </>
   );
 }

@@ -15,7 +15,6 @@ const MainContent = styled.div`
   }
 `;
 
-
 export default function LayoutHome({ children }) {
 
   const [user, setUser] = useState(null);

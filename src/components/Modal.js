@@ -1,73 +1,9 @@
-
 import { useState, useEffect } from 'react';
-import styled from 'styled-components';
 import { GrLinkPrevious } from "react-icons/gr";
+import { FaRegImage } from "react-icons/fa6";
 import { Roller } from 'react-css-spinners'
 import toast from "react-hot-toast"
-const ModalOverlay = styled.div`
-  z-index: 100;
-  position: fixed;
-  top: 0; 
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ModalContent = styled.div`
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  width: 900px;
-  max-width: 100%;
-`;
-
-const Button = styled.button`
-  padding: 10px 20px;
-  background-color: #333;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-`;
-
-const Input = styled.input`
-  width: 90%;
-  padding: 8px;
-  margin: 8px 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  &.file {
-    border: 2px solid red;
-    max-height: 200px;
-  }
-`;
-
-const Label = styled.label`
-  margin: 8px 0;
-  display: block;
-  font-weight: bold;
-`;
-
-const StyledSelect = styled.select`
-  width: 90%;
-  padding: 8px;
-  margin: 8px 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-`;
-
-const FieldRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  & > div {
-    flex: 1;
-  }
-`;
+import { ModalOverlay, ModalContent,Button, Input, Label,StyledSelect, FieldRow } from '@/styles/modal.style';
 
 const Modal = ({ show, onClose, refreshHotels, hotelToEdit }) => {
     const [isLoading, setIsLoading] = useState(false);
@@ -102,15 +38,32 @@ const Modal = ({ show, onClose, refreshHotels, hotelToEdit }) => {
                 image: '',
             });
         }
+        if (hotelToEdit && hotelToEdit.image) {
+            console.log("Image de hotelToEdit :", hotelToEdit.image);
+            document.querySelector(
+                ".hotel_image"
+            ).style.backgroundImage = `url(${hotelToEdit.image})`;
+            document.querySelector(".hotel_image").style.backgroundSize = "cover";
+            document.querySelector(".hotel_image").style.backgroundPosition = "center";
+        }
     }, [hotelToEdit]);
     const [errorMessage, setErrorMessage] = useState(null);
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
-
+    
     const handleFileChange = (e) => {
         setFormData({ ...formData, image: e.target.files[0] });
+
+        if (e.target.files[0]) {
+            const imageURL = URL.createObjectURL(e.target.files[0]);
+            document.querySelector(
+                ".hotel_image"
+            ).style.backgroundImage = `url(${imageURL})`;
+            document.querySelector(".hotel_image").style.backgroundSize = "cover";
+            document.querySelector(".hotel_image").style.backgroundPosition = "center";
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -167,9 +120,7 @@ const Modal = ({ show, onClose, refreshHotels, hotelToEdit }) => {
         <ModalOverlay onClick={onClose}>
             <ModalContent onClick={(e) => e.stopPropagation()}>
                 <h2>
-                    <Button onClick={onClose} style={{ marginTop: '10px' }}>
-                        <GrLinkPrevious />
-                    </Button>
+                    <GrLinkPrevious onClick={onClose} style={{ marginTop: '15px' }} />
                     {hotelToEdit ? 'Modifier l\'hôtel' : 'Créer un nouvel hôtel'}
                 </h2>
                 <form onSubmit={handleSubmit}>
@@ -207,12 +158,14 @@ const Modal = ({ show, onClose, refreshHotels, hotelToEdit }) => {
                             </StyledSelect>
                         </div>
                     </FieldRow>
-                    <Label>Ajouter une photo</Label>
-                    <Input className="file" type="file" accept="image/*" onChange={handleFileChange}
-                    />
+                    <FieldRow className="hotel_image">
+                        <Label>Ajouter une photo</Label>
+                        <FaRegImage />
+                        <Input className="file" type="file" accept="image/*" onChange={handleFileChange} />
+                    </FieldRow>
                     <Button type="submit" disabled={isLoading}>
-                        {isLoading ? <span>Loading <Roller size={15}/> </span> : (hotelToEdit ? 'Mettre à jour' : 'Enregistrer')}
-                    </Button> 
+                        {isLoading ? <span>Loading <Roller size={15} /> </span> : (hotelToEdit ? 'Mettre à jour' : 'Enregistrer')}
+                    </Button>
                 </form>
             </ModalContent>
         </ModalOverlay>

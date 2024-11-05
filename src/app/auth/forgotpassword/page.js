@@ -1,60 +1,9 @@
 "use client";
 import { useState } from "react";
-import styled from "styled-components";
 import Link from "next/link";
 import toast from "react-hot-toast"
 import { Roller } from 'react-css-spinners'
-const Input = styled.input`
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #CCCCCC;
-  border-radius: 4px;
-  box-sizing: border-box;
-`;
-
-const Button = styled.button`
-  width: 100%;
-  padding: 10px;
-  background-color: #4A4A4A;
-  color: #FFFFFF;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #3A3A3A;
-  }
-`;
-
-const ForgotPassword = styled.div`
-  margin-top: 20px;
-  font-size: 14px;
-
-  a {
-    color: #FFD700;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-`;
-
-const Signup = styled.div`
-  margin-top: 20px;
-  font-size: 14px;
-
-  a {
-    color: #FFD700;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-`;
+import { AuthContainer, AuthFooter, Input, Button } from "@/styles/auth.style";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -87,7 +36,7 @@ export default function LoginPage() {
 
   return (
     <>
-      <h1>RED PRODUCT</h1>
+      <AuthContainer>
       <p>Entrez votre adresse mail ci-dessous et nous vous envoyons des instructions sur la façon de modifier votre mot de passe</p>
       <form onSubmit={handleSubmit}>
         <Input
@@ -101,11 +50,12 @@ export default function LoginPage() {
           {isLoading ? <span>Loading <Roller size={15}/> </span> : 'Envoyer' }
         </Button>
       </form>
-      <Signup>
+      </AuthContainer>
+      <AuthFooter>
         <p>
           Revenir à la page <Link href="/auth/login">connexion</Link>
         </p>
-      </Signup>
+      </AuthFooter>
     </>
   );
 }

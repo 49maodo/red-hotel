@@ -1,56 +1,10 @@
-"use client"; // Ceci doit être la première ligne du fichier
+"use client";
 import { Roller } from 'react-css-spinners'
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import styled from "styled-components";
 import Link from "next/link";
 import toast from "react-hot-toast"
-const Input = styled.input`
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #CCCCCC;
-  border-radius: 4px;
-  box-sizing: border-box;
-`;
-
-const Button = styled.button`
-  width: 100%;
-  padding: 10px;
-  background-color: #4A4A4A;
-  color: #FFFFFF;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #3A3A3A;
-  }
-`;
-
-const Checkbox = styled.input`
-  margin-right: 10px;
-`;
-
-const Label = styled.label`
-  font-size: 14px;
-  color: #666666;
-`;
-
-const LoginLink = styled.div`
-  margin-top: 20px;
-  font-size: 14px;
-
-  a {
-    color: #FFD700;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-`;
+import { AuthContainer, AuthFooter, Input, Checkbox, Label, Button } from "@/styles/auth.style";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -111,7 +65,7 @@ export default function RegisterPage() {
   }, [error, success]);
   return (
     <>
-      <h1>Créer un compte</h1>
+      <AuthContainer>
       <p>Inscrivez-vous en tant qu&apos;Admin</p>
       <form onSubmit={handleSubmit}>
         <Input id="nom" name="nom" type="text" placeholder="Nom" required />
@@ -126,11 +80,12 @@ export default function RegisterPage() {
           {isLoading ? <span>Loading <Roller size={15}/> </span> : 'S\'inscrire' }
         </Button>
       </form>
-      <LoginLink>
+      </AuthContainer>
+      <AuthFooter>
         <p>
           Vous avez déjà un compte? <Link href="/auth/login">Se connecter</Link>
         </p>
-      </LoginLink>
+      </AuthFooter>
     </>
   );
 }
