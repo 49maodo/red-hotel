@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import toast from "react-hot-toast"
-import { Roller } from 'react-css-spinners'
+import { Ring } from 'react-css-spinners'
 import { AuthContainer, AuthFooter, Input, Button } from "@/styles/auth.style";
 
 export default function ResetPasswordPage() {
@@ -75,7 +75,7 @@ export default function ResetPasswordPage() {
             required
           />
           <Button type="submit" disabled={isLoading}>
-            {isLoading ? <span>Loading <Roller size={15} /></span> : 'Modifier'}
+            {isLoading ? <span className="load"> <span>Loading</span> <Ring size={18} /> </span> : 'Modifier'}
           </Button>
         </form>
       </AuthContainer>

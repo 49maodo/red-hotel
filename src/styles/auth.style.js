@@ -16,17 +16,19 @@ export const AuthTitle = styled.div`
   color: #FFFFFF;
   display: flex;
   padding: 0px;
-  margin: 0px;
+  margin: 0 0 20px 0;
   justify-content: center;
   align-items: center;
+  gap: 5px;
   & img{
-    width: 30px;
+    width: 1.5rem;
     margin: 0px;
-    padding: 0px 0px 15px 0px;
+    padding: 0px 0px 20px 0px;
   }
   & h1{
     margin: 0px;
-    padding: 0px 0px 15px 0px;
+    font-size: 1.5rem;
+    padding: 0px 0px 20px 0px;
   }
 `;
 export const AuthContainer = styled.div`
@@ -34,7 +36,11 @@ export const AuthContainer = styled.div`
   padding: 30px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 300px;
+  width: 260px;
+
+  & form div.text{
+  margin: 0 0  7px 0;
+  }
 `;
 export const AuthFooter = styled.div`
   margin-top: 20px;
@@ -56,8 +62,9 @@ export const Input = styled.input`
   margin: 10px 0;
   border: none;
   border-bottom: 2px solid #CCCCCC;
-  border-radius: 4px;
+  border-radius: 1px;
   box-sizing: border-box;
+  outline: none;
 `;
 
 export const Checkbox = styled.input`
@@ -72,12 +79,22 @@ export const Label = styled.label`
 export const Button = styled.button`
   width: 100%;
   padding: 10px;
+  min-height: 40px;
   background-color: #4A4A4A;
   color: #FFFFFF;
   border: none;
   border-radius: 4px;
   font-size: 16px;
   cursor: pointer;
+  
+  & span.load{
+    gap: 7px;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+  }
 
   &:hover {
     background-color: #3A3A3A;

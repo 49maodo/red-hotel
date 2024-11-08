@@ -28,7 +28,7 @@ export const Sidebar = ({ user, isvisible }) => {
       <Profile>
         <Avatar src="/image/1.jpg" alt="Profile" />
         <div>
-          <div>{user.nom} {user.prenom}</div>
+          <div>{user?.nom} {user?.prenom}</div>
           <Status>en ligne</Status>
         </div>
       </Profile>

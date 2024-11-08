@@ -78,7 +78,7 @@ export default function Hotel() {
   };
 
   return (
-
+  <>
     <LayoutHome>
       <Welcome>
         <h2>Hôtels <span>{hotels.length}</span></h2>
@@ -113,5 +113,6 @@ export default function Hotel() {
         ))}
       </HotelGrid>
     </LayoutHome>
+  </>
   );
 }

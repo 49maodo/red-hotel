@@ -6,7 +6,7 @@ export default function AuthLayout({ children }) {
     <ContainerAuth>
       <AuthTitle>
         <img src="/image/redproduct.png" alt="Logo" />
-        <h1>Red PRODUCT</h1>
+        <h1>RED PRODUCT</h1>
       </AuthTitle>
         {children}
     </ContainerAuth>

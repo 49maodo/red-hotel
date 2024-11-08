@@ -1,4 +1,3 @@
-// pages/index.js
 'use client'
 import styled from 'styled-components';
 import { Sidebar } from '@/components/Sidebar';
@@ -6,6 +5,7 @@ import { Header } from '@/components/Header';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from "react-hot-toast"
+import { Ring } from 'react-css-spinners'
 const MainContent = styled.div`
   margin-left: 250px;
   background: #F8F8F8;
@@ -31,7 +31,7 @@ export default function LayoutHome({ children }) {
           method: "GET",
           credentials: "include",
         });
-
+  
         if (response.ok) {
           const data = await response.json();
           setUser(data.user);
@@ -71,9 +71,16 @@ export default function LayoutHome({ children }) {
     }
   }, [error]);
 
-  if (!user) {
-    return null;
-  }
+  // if (!user) {
+  // return (
+  //   <div style={{ display: 'flex', justifyContent:'center', alignItems: 'center', height: '100vh' }}>
+  //         <Ring
+  //             color="rgba(102,95,101,1)"
+  //             size={100}
+  //         />
+  //   </div>
+  // )
+  // }
   return (
     <>
       <Sidebar user={user} isvisible={sidebarVisible} />

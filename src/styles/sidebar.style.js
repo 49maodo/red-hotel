@@ -39,9 +39,10 @@ export const MenuItem = styled.li`
   padding: 0px 0px;
   cursor: pointer;
   display: flex;
-  margin: 15px 0px;
-  &:hover, &.active {
-    background-color: #444;
+  margin: 5px 0px;
+  &:hover{
+    /* background-color: #444; */
+    background-color: rgba(0, 0, 0, 0.16);
   }
   & a{
   color: white;
@@ -53,7 +54,11 @@ export const MenuItem = styled.li`
   height : 40px;
   text-decoration: none;
   }
-  & a:hover, & .active{
+  & a:hover{
+    transform: tranlateX(3px)
+  } 
+  
+  & .active{
     font-weight: bolder;
     background-color: #F8F8F8;;
     color: black;

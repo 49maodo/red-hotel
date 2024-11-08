@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Welcome = styled.div`
   padding: 0px 20px;
-  z-index: 20;
+  /* z-index: 20; */
   display: flex;
   background-color: white;
   align-items: center; 
@@ -108,8 +108,8 @@ export const HotelDelete = styled.button`
 `;
 export const Button1 = styled.button`
   padding: 10px 20px;
-  background-color: transparant;
-  border: 1px solid black;
-  border-radius: 4px;
+  background-color: white;
+  border: 1px solid #AEAEAE;
+  border-radius: 10px;
   cursor: pointer;
 `;

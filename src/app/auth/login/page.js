@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import toast from "react-hot-toast"
-import { Roller } from 'react-css-spinners'
+import { Ring } from 'react-css-spinners'
 import { AuthContainer, AuthFooter, Input, Checkbox, Label, Button } from "@/styles/auth.style";
 
 export default function LoginPage() {
@@ -71,12 +71,12 @@ export default function LoginPage() {
           onChange={(e) => setMotDePasse(e.target.value)}
           required
         />
-        <div>
+          <div className="text">
           <Checkbox id="remember-me" type="checkbox" />
           <Label htmlFor="remember-me">Gardez-moi connecté</Label>
         </div>
         <Button type="submit" disabled={isLoading}>
-          {isLoading ? <span>Loading <Roller size={15}/> </span> : 'Se connecter' }
+            {isLoading ? <span className="load"> <span>Loading</span> <Ring size={18} /> </span> : 'Se connecter' }
         </Button>
       </form>
       </AuthContainer>

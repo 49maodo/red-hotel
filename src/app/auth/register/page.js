@@ -1,5 +1,5 @@
 "use client";
-import { Roller } from 'react-css-spinners'
+import { Ring } from 'react-css-spinners'
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -72,12 +72,12 @@ export default function RegisterPage() {
         <Input id="prenom" name="prenom" type="text" placeholder="Prénom" required />
         <Input id="email" name="email" type="email" placeholder="E-mail" required />
         <Input id="password" name="password" type="password" placeholder="Mot de passe" required />
-        <div>
+          <div className="text">
           <Checkbox id="terms" name="terms" type="checkbox" required />
           <Label htmlFor="terms">Accepter les termes et le politique</Label>
         </div>
         <Button type="submit" disabled={isLoading}>
-          {isLoading ? <span>Loading <Roller size={15}/> </span> : 'S\'inscrire' }
+            {isLoading ? <span className="load"> <span>Loading</span> <Ring size={18} /> </span> : 'S\'inscrire' }
         </Button>
       </form>
       </AuthContainer>

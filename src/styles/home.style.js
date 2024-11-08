@@ -11,16 +11,23 @@ export const CardsWrapper = styled.div`
 export const Card = styled.div`
   background-color: white;
   border-radius: 10px;
-  padding: 5px;
+  padding: 10px;
   flex: 1;
-  min-width: 300px;
+  min-width: 280px;
   display: flex;
   align-items: center;    
   justify-content: flex-start;
-  flex-wrap: now-wrap;
-  gap: 20px;
+  flex-wrap: nowrap;
+  gap: auto;
+  & div{
+    margin: 0px;
+    padding: 0px;
+  }
+  & div p{
+    margin: 0px;
+    padding: 0px;
+  }
   i {
-  border: 2px solid red;
     font-size: 40px;
     margin-right: 20px;
   }
@@ -28,20 +35,24 @@ export const Card = styled.div`
   .info {
     display: flex;  
     align-items: center;
-    gap: 5px
+    /* gap: 0px; */
+    margin: 0px;
+    padding: 0px;
   }
 
   .number {
     font-size: 24px;
     font-weight: 500;
+    margin: 0px;
   }
 
   .label {
     color: #888;
+    margin: 0px;
   }
   .formulaire{
-  width: 65px;
-  height:65px;
+  width: 55px;
+  height:55px;
   color: white;
   border-radius: 100%;
   display: flex;
@@ -50,8 +61,8 @@ export const Card = styled.div`
   background-color: #a88add;
   }
   .message{
-  width: 65px;
-  height:65px;
+  width: 55px;
+  height:55px;
   color: white;
   border-radius: 100%;
   display: flex;
@@ -60,8 +71,8 @@ export const Card = styled.div`
   background-color: #0cc2aa;
   }
   .user{
-  width: 65px;
-  height:65px;
+  width: 55px;
+  height:55px;
   color: white;
   border-radius: 100%;
   display: flex;
@@ -70,8 +81,8 @@ export const Card = styled.div`
   background-color: #fcc100;
   }
   .email{
-  width: 65px;
-  height:65px;
+  width: 55px;
+  height:55px;
   color: white;
   border-radius: 100%;
   display: flex;
@@ -80,8 +91,8 @@ export const Card = styled.div`
   background-color: #f90000;
   }
   .hotel{
-  width: 65px;
-  height:65px;
+  width: 55px;
+  height:55px;
   color: white;
   border-radius: 100%;
   display: flex;
@@ -90,8 +101,8 @@ export const Card = styled.div`
   background-color: #9c27b0;
   }
   .entite{
-  width: 65px;
-  height:65px;
+  width: 55px;
+  height:55px;
   color: white;
   border-radius: 100%;
   display: flex;
@@ -103,20 +114,22 @@ export const Card = styled.div`
 
 export const Welcome = styled.div`
   background-color: white;
-  padding: 5px 25px;
+  padding: 0px 20px;
   border-top: 1px solid rgb(179 173 173 / 50%);
   border-bottom: 1px solid rgb(179 173 173 / 50%);
-  margin-buttom: 15px;
+  margin-bottom: 15px;
+  
   & h2{
-    margin: 0px;
+    margin-bottom: 0px;
     padding:0px;
     font-size: 25px;
     font-weight: 400;
   }
   & p{
-    margin: 0px;
+    margin-top: 0px;
+    color: #000000DE;
     padding:0px;
     font-size: 15px;
-    font-weight: 200;
+    font-weight: 100;
   }
 `;

@@ -127,27 +127,32 @@ const Modal = ({ show, onClose, refreshHotels, hotelToEdit }) => {
                     <FieldRow>
                         <div>
                             <Label>Nom de l&apos;hôtel</Label>
-                            <Input type="text" name="nom" value={formData.nom} onChange={handleChange} required />
+                            <Input type="text" name="nom" value={formData.nom} onChange={handleChange}
+                            placeholder="Nom de l&apos;hôtel" required />
                         </div>
                         <div>
                             <Label>Adresse</Label>
-                            <Input type="text" name="adresse" value={formData.adresse} onChange={handleChange} required />
+                            <Input type="text" name="adresse" value={formData.adresse} onChange={handleChange}
+                                placeholder="Adresse" required />
                         </div>
                     </FieldRow>
                     <FieldRow>
                         <div>
                             <Label>E-mail</Label>
-                            <Input type="email" name="email" value={formData.email} onChange={handleChange} required />
+                            <Input type="email" name="email" value={formData.email} onChange={handleChange}
+                            placeholder="E-mail" required />
                         </div>
                         <div>
                             <Label>Numéro de téléphone</Label>
-                            <Input type="tel" name="numTel" value={formData.numTel} onChange={handleChange} required />
+                            <Input type="tel" name="numTel" value={formData.numTel} onChange={handleChange}
+                            placeholder="Numéro de téléphone" required />
                         </div>
                     </FieldRow>
                     <FieldRow>
                         <div>
                             <Label>Prix par nuit</Label>
-                            <Input type="number" name="prix" value={formData.prix} onChange={handleChange} required />
+                            <Input type="number" name="prix" value={formData.prix} onChange={handleChange}
+                            placeholder="Prix par nuit" required />
                         </div>
                         <div>
                             <Label>Devise</Label>

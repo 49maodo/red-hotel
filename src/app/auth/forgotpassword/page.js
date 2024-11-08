@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import toast from "react-hot-toast"
-import { Roller } from 'react-css-spinners'
+import { Ring } from 'react-css-spinners'
 import { AuthContainer, AuthFooter, Input, Button } from "@/styles/auth.style";
 
 export default function LoginPage() {
@@ -47,8 +47,8 @@ export default function LoginPage() {
           required
         />
         <Button type="submit" disabled={isLoading}>
-          {isLoading ? <span>Loading <Roller size={15}/> </span> : 'Envoyer' }
-        </Button>
+            {isLoading ? <span className="load"> <span>Loading</span> <Ring size={18}/> </span> : 'Envoyer' }
+        </Button>  
       </form>
       </AuthContainer>
       <AuthFooter>
