@@ -35,6 +35,9 @@ export const Button = styled.button`
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  @media screen and (max-width: 768px){
+    width: 100%;
+  }
 `;
 
 export const Input = styled.input`
