@@ -10,7 +10,7 @@ export const CardsWrapper = styled.div`
 
 export const Card = styled.div`
   background-color: white;
-  border-radius: 10px;
+  border-radius: 13px;
   padding: 10px;
   flex: 1;
   min-width: 280px;
@@ -18,10 +18,11 @@ export const Card = styled.div`
   align-items: center;    
   justify-content: flex-start;
   flex-wrap: nowrap;
-  gap: auto;
+  gap: 15px;
   & div{
-    margin: 0px;
+    margin: 3px;
     padding: 0px;
+    
   }
   & div p{
     margin: 0px;
