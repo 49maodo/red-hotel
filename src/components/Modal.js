@@ -3,9 +3,9 @@ import { GrLinkPrevious } from "react-icons/gr";
 import { FaRegImage } from "react-icons/fa6";
 import { Roller } from 'react-css-spinners'
 import toast from "react-hot-toast"
-import { ModalOverlay, ModalContent,Button, Input, Label,StyledSelect, FieldRow } from '@/styles/modal.style';
+import { ModalOverlay, ModalContent, Button, Input, Label, StyledSelect, FieldRow } from '@/styles/modal.style';
 
-const Modal = ({ show, onClose, refreshHotels, hotelToEdit }) => {
+const Modal = ({ show, onClose, refreshHotels, hotelToEdit, hotelsRef }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({
         nom: '',
@@ -52,7 +52,7 @@ const Modal = ({ show, onClose, refreshHotels, hotelToEdit }) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
-    
+
     const handleFileChange = (e) => {
         setFormData({ ...formData, image: e.target.files[0] });
 
@@ -94,6 +94,16 @@ const Modal = ({ show, onClose, refreshHotels, hotelToEdit }) => {
             if (response.ok) {
                 console.log('Hôtel créé avec succès:', responseData);
                 toast.success(hotelToEdit ? 'Hôtel modifié avec succès' : 'Hôtel créé avec succès');
+                if (hotelToEdit) {
+                    // Si c'est une modification, on remplace l'hôtel modifié dans la liste
+                    const updatedHotels = hotelsRef.current.map(hotel =>
+                        hotel._id === hotelToEdit._id ? { ...hotel, ...responseData.hotel } : hotel
+                    );
+                    hotelsRef.current = updatedHotels;
+                } else {
+                    // Si c'est une création, on ajoute le nouvel hôtel à la liste
+                    hotelsRef.current = [...hotelsRef.current, responseData.hotel];
+                }
                 refreshHotels();
                 onClose();
             } else {
@@ -101,7 +111,7 @@ const Modal = ({ show, onClose, refreshHotels, hotelToEdit }) => {
                 console.error('Erreur lors de la création de l\'hôtel:', responseData);
             }
         } catch (error) {
-            setErrorMessage(responseData.message || 'Erreur réseau, veuillez réessayer.');
+            setErrorMessage(error.message || 'Erreur réseau, veuillez réessayer.');
             console.error('Erreur réseau:', error);
         } finally {
             setIsLoading(false);
@@ -128,7 +138,7 @@ const Modal = ({ show, onClose, refreshHotels, hotelToEdit }) => {
                         <div>
                             <Label>Nom de l&apos;hôtel</Label>
                             <Input type="text" name="nom" value={formData.nom} onChange={handleChange}
-                            placeholder="Nom de l&apos;hôtel" required />
+                                placeholder="Nom de l&apos;hôtel" required />
                         </div>
                         <div>
                             <Label>Adresse</Label>
@@ -140,19 +150,19 @@ const Modal = ({ show, onClose, refreshHotels, hotelToEdit }) => {
                         <div>
                             <Label>E-mail</Label>
                             <Input type="email" name="email" value={formData.email} onChange={handleChange}
-                            placeholder="E-mail" required />
+                                placeholder="E-mail" required />
                         </div>
                         <div>
                             <Label>Numéro de téléphone</Label>
                             <Input type="tel" name="numTel" value={formData.numTel} onChange={handleChange}
-                            placeholder="Numéro de téléphone" required />
+                                placeholder="Numéro de téléphone" required />
                         </div>
                     </FieldRow>
                     <FieldRow>
                         <div>
                             <Label>Prix par nuit</Label>
                             <Input type="number" name="prix" value={formData.prix} onChange={handleChange}
-                            placeholder="Prix par nuit" required />
+                                placeholder="Prix par nuit" required />
                         </div>
                         <div>
                             <Label>Devise</Label>

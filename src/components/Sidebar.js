@@ -3,11 +3,13 @@ import { MdDashboard } from "react-icons/md";
 import Link from 'next/link';
 import { usePathname } from 'next/navigation'
 import { SidebarWrapper, Logo, Menu, MenuItem, Profile, Avatar, Status } from '@/styles/sidebar.style';
+import { useAuth } from "./AuthContext";
 
-export const Sidebar = ({ user, isvisible }) => {
+export const Sidebar = () => {
+  const { user, sidebarVisible } = useAuth();
   const pathname = usePathname()
   return (
-    <SidebarWrapper isvisible={isvisible}>
+    <SidebarWrapper isvisible={sidebarVisible}>
       <div>
         <Logo>RED PRODUCT</Logo>
         <Menu>

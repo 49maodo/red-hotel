@@ -1,11 +1,15 @@
 import { FaBell } from 'react-icons/fa';
 import { LuLogOut } from "react-icons/lu";
 import { CiMenuBurger } from "react-icons/ci";
-import { HeaderWrapper, Title, Menu, SearchWrapper, SearchInput, SearchIcon,
-Notifications, NotificationIcon, ProfileImage } from '@/styles/header.style';
+import {
+  HeaderWrapper, Title, Menu, SearchWrapper, SearchInput, SearchIcon,
+  Notifications, NotificationIcon, ProfileImage
+} from '@/styles/header.style';
+import { useAuth } from './AuthContext';
 
-export const Header = ({ toggleSidebar, onLogout }) => (
-  <HeaderWrapper>
+export const Header = () => {
+  const { handleLogout, toggleSidebar } = useAuth();
+  return <HeaderWrapper>
     <Menu onClick={toggleSidebar}>
       <CiMenuBurger />
     </Menu>
@@ -20,7 +24,7 @@ export const Header = ({ toggleSidebar, onLogout }) => (
         <FaBell />
       </NotificationIcon>
       <ProfileImage src="/image/1.jpg" alt="Profile" />
-      <LuLogOut onClick={onLogout} style={{ cursor: 'pointer' }} />
+      <LuLogOut onClick={handleLogout} style={{ cursor: 'pointer' }} />
     </Notifications>
   </HeaderWrapper>
-);
+};
